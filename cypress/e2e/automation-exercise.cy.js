@@ -7,19 +7,17 @@ describe('Automation-exercise', () => {
 
         const timestamp = new Date().getTime()
 
+        // Arrange: Visitar a página e navegar para o login
         cy.visit('https://automationexercise.com/')
-
         cy.get('a[href="/login"]').click()
 
+        // Act: Iniciar o processo de cadastro
         cy.get('[data-qa="signup-name"]').type('QA Tester')
+        cy.get('[data-qa="signup-email"]').type(`qatester-${timestamp}@teste.com`)
+        cy.get('[data-qa="signup-button"]').click()
 
-        cy.get('[data-qa="signup-email"]').type(`qatestare-${timestamp}@teste.com`)
-
-        cy.contains('button', 'Signup').click()
-
-
-        //Para selecionar um elemento do tipo checkbox, podemos usar umas destas 2 opções
-        //cy.get('#id_gender1').check()
+        // Act: Preencher o formulário de informações da conta
+        cy.get('b').should('contain.text', 'Enter Account Information')
         cy.get('input[type="radio"]').check('Mr')
 
         cy.get('input#password').type('12345', {log:false})
@@ -43,7 +41,12 @@ describe('Automation-exercise', () => {
         cy.get('[data-qa="zipcode"]').type('4310')
         cy.get('[data-qa="mobile_number"]').type('+64 1234 5678')
 
+        // Act: Criar a conta
         cy.get('[data-qa="create-account"]').click()
+
+        // Assert: Verificar se a conta foi criada com sucesso
+        cy.url().should('includes', 'account_created')
+        cy.get('b').should('have.text', 'Account Created!')
 
      });
 });

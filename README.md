@@ -28,14 +28,31 @@ Se você está clonando este repositório, siga os passos abaixo para configurar
 
 ## Executando os Testes
 
-Após a instalação, você pode abrir o Cypress Test Runner para executar os testes.
+Você pode executar os testes de duas maneiras: com a interface gráfica (interativa) ou via linha de comando (headless).
 
-1.  **Abra o Cypress:**
+### Modo Interativo (Recomendado para desenvolvimento)
+
+1.  **Abra o Cypress Test Runner:**
+    ```bash
+    npm run cy:open
+    ```
+    *Ou use o comando npx diretamente:*
     ```bash
     npx cypress open
     ```
 
-2.  Siga as instruções na interface do Cypress para configurar o projeto (se for a primeira vez) e executar os testes.
+2.  Na interface do Cypress, selecione o navegador e o teste que deseja executar.
+
+### Modo Headless (Recomendado para CI/CD e execução rápida)
+
+Para executar todos os testes em segundo plano, sem abrir a interface gráfica, use o comando:
+```bash
+npm run cy:run
+```
+*Ou use o comando npx diretamente:*
+```bash
+npx cypress run
+```
 
 ## Testes Implementados
 
@@ -43,9 +60,13 @@ Este projeto contém os seguintes cenários de teste automatizados.
 
 ### `cypress/e2e/automation-exercise.cy.js`
 
-*   **`Cadastrar um usuário`**: Este teste verifica o fluxo inicial de cadastro de um novo usuário.
-    1.  Acessa a página inicial: `https://automationexercise.com/`.
-    2.  Clica no link "Signup / Login" para navegar até a página de login/cadastro.
+*   **`Cadastrar um usuário`**: Este teste verifica o fluxo completo de cadastro de um novo usuário.
+    1.  Acessa a página inicial do Automation Exercise.
+    2.  Navega para a página de login/cadastro.
+    3.  Inicia o processo de cadastro com um nome e um e-mail gerado dinamicamente.
+    4.  Preenche todos os campos do formulário de informações da conta e endereço.
+    5.  Submete o formulário.
+    6.  Verifica se a conta foi criada com sucesso, confirmando a URL e a mensagem na tela.
 
 ---
 

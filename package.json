@@ -1,0 +1,24 @@
+{
+  "name": "automacao_web_cypress",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Priscila-Alvesc/Automacao_Web_Cypress.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Priscila-Alvesc/Automacao_Web_Cypress/issues"
+  },
+  "homepage": "https://github.com/Priscila-Alvesc/Automacao_Web_Cypress#readme",
+  "devDependencies": {
+    "cypress": "^13.7.3"
+  }
+}

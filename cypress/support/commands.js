@@ -19,3 +19,14 @@ Cypress.Commands.add('login', (email, password) => {
     cy.get('[data-qa="login-password"]').type(password, { log: false });
     cy.get('[data-qa="login-button"]').click();
 });
+
+/**
+ * Preenche o formulário de contato com os dados de um usuário.
+ * @param {object} userData - O objeto contendo os dados do usuário (name, email, subject, message).
+ */
+Cypress.Commands.add('fillContactForm', (userData) => {
+    cy.get('[data-qa="name"]').type(userData.name);
+    cy.get('[data-qa="email"]').type(userData.email);
+    cy.get('[data-qa="subject"]').type(userData.subject);
+    cy.get('[data-qa="message"]').type(userData.message);
+});

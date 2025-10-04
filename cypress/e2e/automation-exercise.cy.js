@@ -1,9 +1,14 @@
 //describe -> suíte ou conjunto  de testes em um mesmo arquivo
 // it -> um teste dentor de um bloco ou conjunto de testes
 ///<reference types="cypress" />
- 
+
+import { faker } from '@faker-js/faker'
+
+import {
+  getPass
+} from '../support/helpers'
+
 describe('Automation-exercise', () => {
-    // Usamos 'let' para que as variáveis possam ser compartilhadas entre os testes no mesmo 'describe'
     let userEmail;
     let userPassword;
 
@@ -13,13 +18,12 @@ describe('Automation-exercise', () => {
     });
 
     it('Cadastrar um usuário', () => {
-        const timestamp = new Date().getTime()
-        userEmail = `qatester-${timestamp}@teste.com`;
-        userPassword = '12345';
+        userEmail = faker.internet.email();
+        userPassword = getPass();
 
         // Act: Iniciar o processo de cadastro
         cy.get('a[href="/login"]').click();
-        cy.get('[data-qa="signup-name"]').type('QA Tester')
+        cy.get('[data-qa="signup-name"]').type(faker.person.fullName())
         cy.get('[data-qa="signup-email"]').type(userEmail)
         cy.get('[data-qa="signup-button"]').click()
 
@@ -27,24 +31,24 @@ describe('Automation-exercise', () => {
         cy.get('input[type="radio"]').check('Mr')
 
         cy.get('input#password').type(userPassword, {log:false})
-
-        cy.get('select[data-qa="days"]').select('20')
-        cy.get('select[data-qa="months"]').select('May')
-        cy.get('select[data-qa="years"]').select('2010')
+        const birthDate = faker.date.birthdate({ min: 18, max: 65, mode: 'age' });
+        cy.get('select[data-qa="days"]').select(birthDate.getDate().toString());
+        cy.get('select[data-qa="months"]').select(birthDate.toLocaleString('en-US', { month: 'long' }));
+        cy.get('select[data-qa="years"]').select(birthDate.getFullYear().toString());
 
         cy.get('input[type=checkbox]#newsletter').check()
         cy.get('input[type=checkbox]#optin').check()
 
-        cy.get('input#first_name').type('Joao')
-        cy.get('input#last_name').type('Silva QA')
-        cy.get('input#company').type('QAs Company')
-        cy.get('input#address1').type('Rua Eucaliptos, Nº 1')
-        cy.get('input#address2').type('Rua Flores, Nº 4')
+        cy.get('input#first_name').type(faker.person.firstName())
+        cy.get('input#last_name').type(faker.person.lastName())
+        cy.get('input#company').type(faker.company.name())
+        cy.get('input#address1').type(faker.location.streetAddress())
+        cy.get('input#address2').type(faker.location.secondaryAddress())
         cy.get('select#country').select('New Zealand')
-        cy.get('input#state').type('Taranaki')
-        cy.get('input#city').type('New Plymouth') 
-        cy.get('[data-qa="zipcode"]').type('4310')
-        cy.get('[data-qa="mobile_number"]').type('+64 1234 5678')
+        cy.get('input#state').type(faker.location.state())
+        cy.get('input#city').type(faker.location.city())
+        cy.get('[data-qa="zipcode"]').type(faker.location.zipCode())
+        cy.get('[data-qa="mobile_number"]').type(faker.phone.number())
 
         // Act: Criar a conta
         cy.get('[data-qa="create-account"]').click()
@@ -91,4 +95,22 @@ describe('Automation-exercise', () => {
         cy.contains('Login to your account').should('be.visible');
     });
 
+    it('Enviar um formulario de contato com upload do arquivo', () => {
+        // Arrange: Carrega os dados do formulário e navega para a página
+        cy.fixture('example.json').as('contactData').then((userData) => {
+            cy.get('a[href="/contact_us"]').click();
+            
+            // Act: Preenche o formulário (usando o comando customizado)
+            cy.fillContactForm(userData);
+        });
+
+        cy.get('input[type=file]').selectFile('@contactData');
+
+        // Act: Submeter o formulário
+        cy.get('[data-qa="submit-button"]').click();
+
+        // Assert: Verificar a mensagem de sucesso
+        cy.get('.status.alert-success').should('be.visible')
+            .and('have.text', 'Success! Your details have been submitted successfully.');
+      });
 });

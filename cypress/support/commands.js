@@ -7,19 +7,15 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * Realiza o login na aplicação com um usuário e senha.
+ * @param {string} email - O e-mail do usuário.
+ * @param {string} password - A senha do usuário.
+ */
+Cypress.Commands.add('login', (email, password) => {
+    cy.get('a[href="/login"]').click();
+    cy.get('[data-qa="login-email"]').type(email);
+    cy.get('[data-qa="login-password"]').type(password, { log: false });
+    cy.get('[data-qa="login-button"]').click();
+});

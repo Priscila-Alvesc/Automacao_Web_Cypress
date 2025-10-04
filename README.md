@@ -101,6 +101,3 @@ Estas são as instruções para iniciar um projeto de automação com Cypress do
     ```bash
     npx cypress open
     ```
-
-6.  **Avançar até executar o primeiro teste:**
-    Siga as instruções na janela do Cypress que será aberta para configurar seu projeto e rodar os testes de exemplo.

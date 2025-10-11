@@ -1,7 +1,7 @@
 {
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
+  "name": "Usando fixtures para representar a data",
+  "email": "hello@test.com",
   "subject": "Support",
-  "body": "Fixtures are a great way to mock data for responses to routes",
+  "body": "Fixtures são legais",
   "message": "Olá, vamos enviar arquivo"
 }

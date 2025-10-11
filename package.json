@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --reporter cypress-mochawesome-reporter"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "homepage": "https://github.com/Priscila-Alvesc/Automacao_Web_Cypress#readme",
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
-    "cypress": "^13.7.3"
+    "cypress": "^13.7.3",
+    "cypress-mochawesome-reporter": "^4.0.2"
   },
   "dependencies": {
     "chance": "^1.1.13"

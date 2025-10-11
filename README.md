@@ -101,3 +101,8 @@ Estas são as instruções para iniciar um projeto de automação com Cypress do
     ```bash
     npx cypress open
     ```
+
+6. ** Executar o cypress em modo headless**
+    ```bash
+    npx cypress run
+    ````

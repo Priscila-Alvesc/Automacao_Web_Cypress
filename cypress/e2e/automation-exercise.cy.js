@@ -3,9 +3,9 @@
 ///<reference types="cypress"/>
 
 import { faker } from '@faker-js/faker'
-
+import userData from '../fixtures/example.json'
 import {
-  getPass
+    getPass
 } from '../support/helpers'
 
 describe('Automation-exercise', () => {
@@ -15,6 +15,7 @@ describe('Automation-exercise', () => {
     beforeEach(() => {
         cy.viewport('iphone-xr');
         cy.visit('https://automationexercise.com/');
+        cy.get('a[href="/login"]').click();
     });
 
     it('Cadastrar um usuário', () => {
@@ -22,7 +23,6 @@ describe('Automation-exercise', () => {
         userPassword = getPass();
 
         // Act: Iniciar o processo de cadastro
-        cy.get('a[href="/login"]').click();
         cy.get('[data-qa="signup-name"]').type(faker.person.fullName())
         cy.get('[data-qa="signup-email"]').type(userEmail)
         cy.contains('button', 'Signup').click()
@@ -61,7 +61,6 @@ describe('Automation-exercise', () => {
 
      it('Login de Usuário com e-mail e senha válidos', () => {
         // Arrange: Navegar para a página de login e usar os dados do teste anterior
-        cy.get('a[href="/login"]').click();
         cy.get('[data-qa="login-email"]').type(userEmail);
         cy.get('[data-qa="login-password"]').type(userPassword);
 
@@ -75,7 +74,6 @@ describe('Automation-exercise', () => {
      });
 
     it('Login de Usuário com e-mail e senha incorretos', () => {
-       cy.get('a[href="/login"]').click();
        // Act: Tentar fazer login com credenciais inválidas
         cy.get('[data-qa="login-email"]').type('email-invalido@teste.com')
         cy.get('[data-qa="login-password"]').type('54321')
@@ -91,7 +89,6 @@ describe('Automation-exercise', () => {
 
     it('Logout de Usuário', () => {
         // Arrange: Navegar para a página de login e usar os dados do teste anterior
-        cy.get('a[href="/login"]').click();
         cy.get('[data-qa="login-email"]').type(userEmail);
         cy.get('[data-qa="login-password"]').type(userPassword);
 
@@ -111,7 +108,6 @@ describe('Automation-exercise', () => {
     });
     
     it('Cadastrar Usuário com e-mail existente no sistema', () => {
-        cy.get('a[href="/login"]').click();
         cy.get('[data-qa="signup-name"]').type('Tiffany Grimes')
         cy.get('[data-qa="signup-email"]').type('Jeanne38@yahoo.com')
         cy.contains('button', 'Signup').click()
@@ -122,14 +118,15 @@ describe('Automation-exercise', () => {
 
     it('Enviar um formulario de contato com upload do arquivo', () => {
         // Arrange: Carrega os dados do formulário e navega para a página
-        cy.fixture('example.json').as('contactData').then((userData) => {
-            cy.get('a[href="/contact_us"]').click();
+        cy.get('a[href="/contact_us"]').click();
             
-            // Act: Preenche o formulário (usando o comando customizado)
-            cy.fillContactForm(userData);
-        });
+        cy.get('[data-qa=name]').type(userData.name);
+        cy.get('[data-qa=email]').type(userData.email);
+        cy.get('[data-qa=subject]').type(userData.subject);
+        cy.get('[data-qa=message]').type(userData.body);    
 
-        cy.get('input[type=file]').selectFile('@contactData');
+        cy.fixture('example.json').as('arquivo') 
+        cy.get('input[type=file]').selectFile('@arquivo');
 
         // Act: Submeter o formulário
         cy.get('[data-qa="submit-button"]').click();

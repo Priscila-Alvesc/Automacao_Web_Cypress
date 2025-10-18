@@ -1,4 +1,4 @@
-// cypress/support/e2e.js
+//cypress/support/e2e.js
 
 // Importa e registra os comandos do plugin cypress-xpath
 require('cypress-xpath');

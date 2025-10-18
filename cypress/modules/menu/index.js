@@ -10,6 +10,12 @@ class Menu{
         // Act: Fazer logout
         cy.get('a[href="/logout"]').should('be.visible').click();
      }
+
+     pesquisarProduto(){
+        cy.get('a[href="/products"]').click();
+        cy.url().should('include', '/products');
+        cy.get('.features_items').should('be.visible')
+     }
         
 }
 

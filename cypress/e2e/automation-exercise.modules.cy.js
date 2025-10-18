@@ -92,4 +92,40 @@ describe('Automation-exercise', () => {
         cy.get('.status.alert-success').should('be.visible')
             .and('have.text', 'Success! Your details have been submitted successfully.');
       });
+
+       it('Verificar produtos na página de produtos', () => {
+        menu.pesquisarProduto();
+        cy.get('.features_items .product-image-wrapper').should('have.length', 34)
+ 
+        // Clica no link 'View Product' do primeiro produto da lista
+        cy.get('.features_items .product-image-wrapper').first().contains('View Product').click();
+        cy.url().should('include', '/product_details/1');
+ 
+        // Agrupa as asserções dentro do escopo do elemento '.product-information'
+        cy.get('.product-information').should('be.visible')
+            .within(() => {
+                cy.get('h2').should('have.text', 'Blue Top');
+                cy.contains('p', 'Category:').should('be.visible');
+                cy.get('span').contains('Rs. 500').should('be.visible');
+                cy.contains('p', 'Availability:').should('contain.text', 'In Stock');
+                cy.contains('p', 'Condition:').should('contain.text', 'New');
+                cy.contains('p', 'Brand:').should('contain.text', 'Polo');
+            });
+    });
+ 
+    it('Deve buscar por um produto e verificar o resultado', () => {
+        menu.pesquisarProduto();
+ 
+        cy.get('[id="search_product"]').type('blue top');
+        cy.get('[id="submit_search"]').click();
+        cy.get('.features_items .product-image-wrapper').should('have.length', 1);
+        cy.url().should('include', '/products?search=blue%20top');
+ 
+        // Verifica o título e os detalhes do produto encontrado
+        cy.get('.features_items').within(() => {
+            cy.get('.title').should('have.text', 'Searched Products');
+            cy.get('.productinfo img').should('be.visible');
+            cy.get('.productinfo p').should('contain.text', 'Blue Top');
+        });
+    });
 });

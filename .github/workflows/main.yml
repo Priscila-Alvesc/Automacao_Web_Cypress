@@ -19,10 +19,12 @@ jobs:
         run: npm install
 
       - name: Executando os testes
-        run: npx cypress run
+        # Executa o script do package.json para usar o reporter correto
+        run: npm run cy:run
 
-      - uses: actions/upoad-artifact@V4
-        if: ${{ !cancelled() }}
+      - uses: actions/upload-artifact@v4
+        # Garante que os artefatos sejam sempre enviados, mesmo se os testes falharem
+        if: always()
         with:
           name: relatorios
           path: |

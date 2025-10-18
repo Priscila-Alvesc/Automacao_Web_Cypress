@@ -1,6 +1,3 @@
-// A função 'it' é uma função global do Mocha/Cypress e não precisa ser importada.
-// Se precisar do faker, use: import { faker } from '@faker-js/faker';
-
 describe('Interações Diversas', () => {
     it('Deve abrir um link em uma nova aba e validar seu conteúdo', () => {
         cy.visit('https://the-internet.herokuapp.com/windows')

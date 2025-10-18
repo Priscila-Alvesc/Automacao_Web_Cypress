@@ -58,16 +58,39 @@ npx cypress run
 
 Este projeto contém os seguintes cenários de teste automatizados.
 
-### `cypress/e2e/automation-exercise.cy.js`
+### Testes da Aplicação "Automation Exercise"
 
-*   **`Cadastrar um usuário`**: Este teste verifica o fluxo completo de cadastro de um novo usuário.
-    1.  Acessa a página inicial do Automation Exercise.
-    2.  Navega para a página de login/cadastro.
-    3.  Inicia o processo de cadastro com um nome e um e-mail gerado dinamicamente.
-    4.  Preenche todos os campos do formulário de informações da conta e endereço.
-    5.  Submete o formulário.
-    6.  Verifica se a conta foi criada com sucesso, confirmando a URL e a mensagem na tela.
+Os arquivos `automation-exercise.cy.js`, `automation-exercise.xpath.cy.js` e `automation-exercise.modules.cy.js` cobrem os seguintes fluxos:
 
+*   **Cadastro de Usuário**:
+    *   `Cadastrar um usuário`: Verifica o fluxo completo de cadastro de um novo usuário com dados dinâmicos.
+    *   `Cadastrar Usuário com e-mail existente`: Valida a mensagem de erro ao tentar cadastrar um e-mail que já existe.
+
+*   **Autenticação**:
+    *   `Login de Usuário com e-mail e senha válidos`: Testa o login com credenciais corretas.
+    *   `Login de Usuário com e-mail e senha incorretos`: Valida a mensagem de erro para credenciais inválidas.
+    *   `Logout de Usuário`: Verifica se o usuário consegue sair do sistema e é redirecionado para a página de login.
+
+*   **Produtos**:
+    *   `Verificar produtos na página de produtos`: Acessa a página de produtos, valida a quantidade de itens e verifica os detalhes do primeiro produto.
+    *   `Deve buscar por um produto e verificar o resultado`: Testa a funcionalidade de busca e valida se o produto correto é exibido.
+
+*   **Contato**:
+    *   `Enviar um formulario de contato com upload do arquivo`: Preenche o formulário de contato, anexa um arquivo e valida a mensagem de sucesso.
+
+### Testes de Interações Diversas (`drag-and-drop-and-windows.cy.js`)
+
+Este arquivo testa funcionalidades específicas do navegador em um ambiente de demonstração (`the-internet.herokuapp.com`).
+
+*   **`Deve abrir um link em uma nova aba e validar seu conteúdo`**:
+    1.  Acessa a página de teste de janelas.
+    2.  Clica em um link que abriria uma nova aba, mas remove o atributo `target` para que a página carregue na mesma aba.
+    3.  Valida o conteúdo e a URL da nova página.
+
+*   **`Deve arrastar o elemento A para o elemento B`**:
+    1.  Acessa a página de "drag and drop".
+    2.  Simula o arraste de um elemento para a posição de outro.
+    3.  *Observação: Este teste requer um plugin como `@4tw/cypress-drag-drop` para funcionar de forma robusta.*
 ---
 
 ---

@@ -7,20 +7,15 @@ jobs:
   e2e-tests:
 
   runs-on: ubuntu-lastet
-
   steps:
     #clone do projeto para a máquina
     -uses: actions/checkout@v4
-
-    #conferir a versão instalada
-    -name: Node version
+   # conferir a versão instalada
+    - name: Node version
     run: node --version
 
-    -name: Instalando dependências
+    - name: Instalando dependências
     run: npm install
 
-    -name: Executando os testes
+    - name: Executando os testes
     run: npx cypress run
-    
-  
-  

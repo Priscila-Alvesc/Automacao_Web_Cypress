@@ -13,10 +13,10 @@ jobs:
         
       # conferir a versão instalada
       - name: Node version
-      run: node --version
+        run: node --version
       
       - name: Instalando dependências
-      run: npm install
+        run: npm install
       
       - name: Executando os testes
-       run: npx cypress run
+         run: npx cypress run

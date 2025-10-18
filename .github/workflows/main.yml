@@ -18,9 +18,8 @@ jobs:
       - name: Instalando dependências
         run: npm install
 
-      - name: Executando os testes
-        # Executa o script do package.json para usar o reporter correto
-        run: npm run cy:run
+      - name: Executando os spec automation-exercise.modules.cy.js
+        run: npm run cy:run -- --spec "cypress/e2e/automation-exercise.modules.cy.js"
 
       - uses: actions/upload-artifact@v4
         # Garante que os artefatos sejam sempre enviados, mesmo se os testes falharem

@@ -30,7 +30,7 @@ class Cadastro{
         cy.get('[data-qa="create-account"]').click()
     }
 
-        preencherFormularioDeLoginUserExistente(){
+     preencherFormularioDeLoginUserExistente(){
         cy.get('[data-qa="signup-name"]').type('Tiffany Grimes')
         cy.get('[data-qa="signup-email"]').type('Jeanne38@yahoo.com')
         cy.contains('button', 'Signup').click()

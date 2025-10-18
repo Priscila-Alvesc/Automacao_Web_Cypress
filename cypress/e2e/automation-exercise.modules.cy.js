@@ -13,10 +13,12 @@ import {
 import menu from '../modules/menu'
 import login from '../modules/login'
 import cadastro from '../modules/cadastro'
-import contact from '../modules/contato'
-import contato from '../modules/contato';
+import contato from '../modules/contato'
+import carrinho from '../modules/carrinho'
 
 describe('Automation-exercise', () => {
+    let userEmail
+    let userPassword
 
    beforeEach(() => {
         cy.viewport('iphone-xr');
@@ -128,4 +130,37 @@ describe('Automation-exercise', () => {
             cy.get('.productinfo p').should('contain.text', 'Blue Top');
         });
     });
+
+    it('Verifique a assinatura na página inicial', () => {
+            cy.get('.single-widget > h2').should('be.visible').and('have.text', 'Subscription')
+            cy.get('#susbscribe_email').type(faker.internet.email())
+            cy.get('#subscribe').click()
+            cy.get('.alert-success').should('be.visible').and('contain.text', 'You have been successfully subscribed!')
+     })
+    
+    it('Pedido: Cadastre-se antes de Finalizar a Compra', () => {
+            userEmail = faker.internet.email()
+            userPassword = getPass()
+    
+            // Iniciar o processo de cadastro
+            login.preencherFormularioPreCadastro(userEmail);
+
+            //Cadastro completo    
+            cadastro.preencherFormularioCadastroCompleto(userPassword);
+
+            // Verificar se a conta foi criada com sucesso
+            cy.url().should('includes', 'account_created');
+            cy.get('b').should('have.text', 'Account Created!');
+    
+            // Adicionar produto ao carrinho
+            carrinho.addFirstProductToCart();
+            carrinho.openCartFromModalOrHeader();
+            carrinho.verifyCartPage();
+
+            carrinho.proceedToCheckout();
+            carrinho.ensureCheckoutReady();
+
+            carrinho.placeOrderAndPay({ message: 'É um presente!' });
+            carrinho.deleteAccount();
+    })
 });
